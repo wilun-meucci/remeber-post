@@ -1,14 +1,10 @@
 from datetime import datetime as dt
+import schedule
+import time
+import telebot
 
-
-
-def time():
-    return dt.now()
-
-
-
-admin = {
-    "Monday" : " @YukoNakitsu",
+adminReZero = {
+    "Monday" : "@YukoNakitsu",
     "Tuesday" : "@Miliguer",
     "Wednesday" : "@Spartacus16ssl",
     "Thursday" : "@Silverio99",
@@ -16,43 +12,45 @@ admin = {
     "Saturday" : "@Demenziale482oro"
 }
 
-
-
-
-import telebot
-from telebot import util, types
-from telebot import types
-from telebot.apihelper import send_animation, send_message, upload_sticker_file
-
-
+adminTQQ = {
+    "Monday" : "@Your_Sirius",
+    "Tuesday" : "@FilippoPazzoSgravato",
+    "Wednesday" : "",
+    "Thursday" : "@ohAenys",
+    "Friday" : "@wlady06",
+    "Saturday" : "@DRIFT_X97"
+}
 
 bot = telebot.TeleBot("5507623814:AAHoDyqHzoDE06_TtXd3Z7-10ejnqPuzO-s")
-t = time()
+
  
 text = "Sono un messagio progrannato perciò non lamentatevi detto questo.... Domani tocca a {} per postare"
 
-        
-for a in admin:
-    """if((t.strftime("%A") == (a))and(t.hour==8)):
-    print("ciao")"""
-    if(dt(t.year,t.month,t.day+1).strftime("%A")==(a)and (t.hour==19)):
-        print("ciao")
-        bot.send_message(-1001492371018, text.format(admin[a]))
-            
-        print((t.day+1))
-        
+def tempo():
+    return dt.now()
 
-@bot.message_handler()
-def start_command(message):
+def sendNotifyTQQ():
+    for a in adminTQQ:
+        if(dt(t.year,t.month,t.day+1).strftime("%A")==(a)and (t.hour==19)):
+            print("messagio mandato in TQQ")
+            bot.send_message(-1001317450691, text.format(adminTQQ[a]))
+
+def sendNotifyReZero():
+    for a in adminReZero:
+        if(dt(t.year,t.month,t.day+1).strftime("%A")==(a)and (t.hour==19)):
+            print("messagio mandato in Re zero")
+            bot.send_message(-1001492371018, text.format(adminReZero[a]))
+
+
+
+schedule.every().day.at("19:30").do(sendNotifyTQQ)
+schedule.every().day.at("19:30").do(sendNotifyReZero)
+
     
-
-    #Il codice deve funzionare solo in chat privata, il bot non prosegue.
-    if message.chat.type != "private":
-        return
-    
-    chat_id = message.chat.id
-
-    bot.send_message(chat_id, "boh")
-
+while True:
+    t = tempo()
+    print(t)
+    schedule.run_pending()
+    time.sleep(60)
 
 bot.polling(none_stop=True)
