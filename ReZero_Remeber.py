@@ -45,7 +45,7 @@ def sendNotifyReZero():
 
 schedule.every().day.at("19:30").do(sendNotifyTQQ)
 schedule.every().day.at("19:30").do(sendNotifyReZero)
-
+bot.send_message(-1001492371018, "test funge ? siamo on?")
     
 while True:
     t = tempo()
